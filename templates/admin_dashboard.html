@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SecurePay Admin</title>
+    <link rel="icon" type="image/png" href="/static/favicon.png">
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+
+<body class="login-body">
+
+<!-- TOP BAR -->
+<div style="display:flex; justify-content:space-between; padding:15px; color:white;">
+    <h2>SecurePay Admin</h2>
+    <a href="/"><button>Logout</button></a>
+</div>
+
+<!-- TITLE -->
+<h1 style="text-align:center; color:white;">Administrator Control Panel</h1>
+
+<!-- CARDS -->
+<div style="display:flex; justify-content:center; gap:30px; margin-top:40px; flex-wrap:wrap;">
+
+    <!-- CREATE -->
+    <div class="card">
+        <h3>👤 Create Account</h3>
+        <p>Onboard new user or merchant</p>
+        <a href="/admin/create">
+            <button>Create</button>
+        </a>
+    </div>
+
+    <!-- USERS -->
+    <div class="card">
+        <h3>👥 View Users</h3>
+        <p>See all registered users</p>
+        <a href="/admin/users">
+            <button>View</button>
+        </a>
+    </div>
+
+    <!-- MERCHANTS -->
+    <div class="card">
+        <h3>🏪 View Merchants</h3>
+        <p>See all merchants</p>
+        <a href="/admin/merchants">
+            <button>View Merchants</button>
+        </a>
+    </div>
+
+    <!-- TRANSACTIONS -->
+    <div class="card">
+        <h3>💳 Transactions</h3>
+        <p>Audit all payments</p>
+        <a href="/admin/transactions">
+            <button>View</button>
+        </a>
+    </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Merchant Dashboard</title>
+    <link rel="icon" type="image/png" href="/static/favicon.png">
+    <link rel="stylesheet" href="/static/css/style.css">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI';
+            background: url("https://img.freepik.com/free-vector/abstract-technology-background_23-2148884153.jpg");
+            background-size: cover;
+            color: white;
+        }
+
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 30px;
+            background: rgba(0,0,0,0.6);
+        }
+
+        .top-bar button {
+            padding: 8px 15px;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .container {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .cards {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .card {
+            width: 250px;
+            padding: 25px;
+            border-radius: 20px;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            transition: 0.3s;
+        }
+
+       .card:hover {
+    background: linear-gradient(45deg, #ff9a9e, #fad0c4);
+    color: black;
+    transform: scale(1.05);
+}
+        .card img {
+            width: 80px;
+        }
+
+        .card h3 {
+            margin-top: 15px;
+        }
+
+        .card p {
+            font-size: 14px;
+            color: #ddd;
+        }
+
+        .card a button {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 10px;
+            border: none;
+            background: #00c6ff;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- TOP BAR -->
+<div class="top-bar">
+    <h3>Merchant Panel - {{ session.user_name }}</h3>
+    <a href="/"><button>Logout</button></a>
+</div>
+
+<!-- MAIN -->
+<div class="container">
+
+    <h1>Merchant Control Panel</h1>
+
+    <div class="cards">
+
+        <!-- PROFILE -->
+        <div class="card">
+            <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png">
+            <h3>Merchant Profile</h3>
+            <p>View and manage your merchant details.</p>
+
+            <a href="/merchant/profile">
+            <button>View Profile</button>
+            </a>
+        </div>
+
+        <!-- TRANSACTIONS -->
+        <div class="card">
+            <img src="https://cdn-icons-png.flaticon.com/512/2331/2331943.png">
+            <h3>Received Transactions</h3>
+            <p>See complete payment logs.</p>
+
+            <a href="/merchant/transactions">
+                <button>View Transactions</button>
+            </a>
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

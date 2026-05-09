@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>OTP Verification</title>
+    <link rel="icon" type="image/png" href="/static/favicon.png">
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+
+<body class="login-body">
+
+<div class="login-box">
+
+    <div class="login-left">
+        <img src="https://cdn-icons-png.flaticon.com/512/3064/3064197.png" width="120">
+    </div>
+
+    <div class="login-right">
+
+        <h2 style="color:white;">Email Verification</h2>
+
+        <p style="color:white; padding:10px;">OTP sent to your registered email.</p>
+
+        {% if error %}
+        <p style="background:rgba(255,0,0,0.3); padding:10px; border-radius:8px; color:white;">{{ error }}</p>
+        {% endif %}
+
+        <!-- IMPORTANT: action updated -->
+        <form method="POST" action="/verify-otp">
+            <input type="hidden" name="device_fingerprint" id="deviceFp">
+            <input type="text" name="otp" placeholder="Enter 6-digit OTP" maxlength="6" required>
+            <button type="submit" class="primary-btn">Verify & Login</button>
+        </form>
+
+        <script>
+        document.querySelector('form').addEventListener('submit', function(){
+            const fp = navigator.userAgent+'|'+screen.width+'x'+screen.height+'|'+navigator.language;
+            document.getElementById('deviceFp').value = btoa(fp).substring(0,64);
+        });
+        </script>
+
+        <br>
+        <a href="/"><button>Cancel</button></a>
+
+    </div>
+
+</div>
+
+</body>
+</html>

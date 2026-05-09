@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Transactions</title>
+
+    <link rel="icon" type="image/png" href="/static/favicon.png">
+    <link rel="stylesheet" href="/static/css/style.css">
+
+<style>
+
+body{
+    margin:0;
+    font-family:Arial;
+}
+
+.popup{
+    display:none;
+    position:fixed;
+    z-index:999;
+    left:0;
+    top:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.7);
+
+    justify-content:center;
+    align-items:center;
+}
+
+.popup-content{
+
+    width:750px;
+
+    background:linear-gradient(135deg,#7b1fd3,#f04d7d);
+
+    border-radius:18px;
+
+    padding:20px;
+
+    color:white;
+
+    position:relative;
+
+    box-shadow:0 0 25px rgba(0,0,0,0.4);
+
+}
+
+.popup-title{
+
+    text-align:center;
+
+    font-size:20px;
+
+    font-weight:bold;
+
+    margin-bottom:20px;
+
+}
+
+.close-btn{
+
+    position:absolute;
+
+    right:20px;
+
+    top:10px;
+
+    font-size:35px;
+
+    cursor:pointer;
+
+}
+
+.top-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(3,1fr);
+
+    gap:15px;
+
+    margin-bottom:18px;
+
+}
+
+.top-card{
+
+    background:rgba(255,255,255,0.12);
+
+    border-radius:15px;
+
+    padding:20px;
+
+    text-align:center;
+
+}
+
+.top-card h3{
+
+    margin-bottom:15px;
+
+    font-size:18px;
+
+}
+
+.top-card p{
+
+    font-size:18px;
+
+}
+
+.middle-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(2,1fr);
+
+    gap:15px;
+
+    margin-bottom:20px;
+
+}
+
+.middle-box{
+
+    background:rgba(255,255,255,0.12);
+
+    border-radius:15px;
+
+    padding:18px;
+
+    text-align:center;
+
+}
+
+.middle-box h3{
+
+    margin-bottom:10px;
+
+}
+
+.log-title{
+
+    text-align:center;
+
+    font-size:22px;
+
+    font-weight:bold;
+
+    margin-bottom:15px;
+
+}
+
+.features-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(4,1fr);
+
+    gap:12px;
+
+}
+
+.feature-box{
+
+    background:rgba(255,255,255,0.12);
+
+    border-radius:12px;
+
+    padding:15px;
+
+    text-align:center;
+
+}
+
+.feature-box h4{
+
+    margin-bottom:10px;
+
+}
+
+.feature-box p{
+
+    font-size:18px;
+
+}
+
+.valid-badge{
+
+    background:green;
+
+    padding:8px 18px;
+
+    border-radius:8px;
+
+    display:inline-block;
+
+}
+
+.fraud-badge{
+
+    background:red;
+
+    padding:8px 18px;
+
+    border-radius:8px;
+
+    display:inline-block;
+
+}
+
+.user-table tr{
+
+    cursor:pointer;
+
+}
+
+.right-box {
+    overflow: visible;
+    max-height: none;
+}
+
+.user-table {
+    width: 100%;
+    min-width: 600px;
+}
+
+.form-container {
+    width: 95%;
+    max-width: 1200px;
+}
+
+</style>
+
+</head>
+
+<body class="login-body">
+
+<div class="form-container">
+
+    <!-- LEFT SIDE -->
+
+    <div class="left-box">
+
+        <img src="https://cdn-icons-png.flaticon.com/512/2331/2331966.png"
+             width="150">
+
+        <h2>Transaction Log</h2>
+
+    </div>
+
+    <!-- RIGHT SIDE -->
+
+    <div class="right-box">
+
+        <h2>Complete Transaction Details</h2>
+
+        <p style="font-size:14px;">
+            Click on any transaction row to view full details.
+        </p>
+
+        <table class="user-table">
+
+            <tr>
+                <th>Status</th>
+                <th>Date/Time</th>
+                <th>User Mobile</th>
+                <th>Merchant UPI</th>
+                <th>Amount</th>
+            </tr>
+
+            {% for row in data %}
+
+            <tr onclick="openPopup(
+                '{{ row.status }}',
+                '{{ row.amount }}',
+                '{{ row.date_time }}',
+                '{{ row.user_mobile }}',
+                '{{ row.merchant_upi }}',
+                '{{ row.category }}',
+                '{{ row.age }}',
+                '{{ row.state }}',
+                '{{ row.zipcode }}'
+            )">
+
+                <td>
+
+{% if row.status == "BLOCKED" %}
+
+    <span class="fraud">
+        BLOCKED
+    </span>
+
+{% else %}
+
+    <span class="safe">
+        SUCCESS
+    </span>
+
+{% endif %}
+
+</td>
+
+                <td>{{ row.date_time }}</td>
+
+                <td>{{ row.user_mobile }}</td>
+
+                <td>{{ row.merchant_upi }}</td>
+
+                <td>₹{{ row.amount }}</td>
+
+            </tr>
+
+            {% endfor %}
+
+        </table>
+
+    </div>
+
+</div>
+
+<div style="text-align:center; margin:20px 0 30px;">
+    <a href="/admin">
+        <button style="padding:10px 30px; background:#007bff; color:white; border:none; border-radius:10px; cursor:pointer; font-size:15px; transition:0.3s;"
+            onmouseover="this.style.background='#0056b3'" onmouseout="this.style.background='#007bff'">
+            ← Back to Dashboard
+        </button>
+    </a>
+</div>
+
+
+<!-- POPUP -->
+
+<div id="popup" class="popup">
+
+    <div class="popup-content">
+
+        <span class="close-btn"
+              onclick="closePopup()">&times;</span>
+
+        <div class="popup-title">
+            Transaction Details
+        </div>
+
+        <!-- TOP -->
+
+        <div class="top-grid">
+
+            <div class="top-card">
+
+                <h3>Status</h3>
+
+                <p>
+                    <span id="pStatus"></span>
+                </p>
+
+            </div>
+
+            <div class="top-card">
+
+                <h3>Amount</h3>
+
+                <p id="pAmount"></p>
+
+            </div>
+
+            <div class="top-card">
+
+                <h3>Date & Time</h3>
+
+                <p id="pDate"></p>
+
+            </div>
+
+        </div>
+
+        <!-- MIDDLE -->
+
+        <div class="middle-grid">
+
+            <div class="middle-box">
+
+                <h3>User Mobile</h3>
+
+                <p id="pUser"></p>
+
+            </div>
+
+            <div class="middle-box">
+
+                <h3>Merchant UPI</h3>
+
+                <p id="pMerchant"></p>
+
+            </div>
+
+        </div>
+
+        <!-- FEATURES -->
+
+        <div class="log-title">
+            Transaction Features Log
+        </div>
+
+        <div class="features-grid">
+
+            <div class="feature-box">
+                <h4>Hour</h4>
+                <p id="pHour"></p>
+            </div>
+
+            <div class="feature-box">
+                <h4>Day</h4>
+                <p id="pDay"></p>
+            </div>
+
+            <div class="feature-box">
+                <h4>Month</h4>
+                <p id="pMonth"></p>
+            </div>
+
+            <div class="feature-box">
+                <h4>Year</h4>
+                <p id="pYear"></p>
+            </div>
+
+            <div class="feature-box">
+                <h4>Category</h4>
+                <p id="pCategory"></p>
+            </div>
+
+            <div class="feature-box">
+                <h4>User Age</h4>
+                <p id="pAge"></p>
+            </div>
+
+            <div class="feature-box">
+                <h4>State</h4>
+                <p id="pState"></p>
+            </div>
+
+            <div class="feature-box">
+                <h4>Zipcode</h4>
+                <p id="pZip"></p>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+function openPopup(
+    status,
+    amount,
+    date,
+    user,
+    merchant,
+    category,
+    age,
+    state,
+    zipcode
+){
+
+    document.getElementById("popup").style.display = "flex";
+
+    // STATUS
+
+    if(status == "BLOCKED"){
+
+        document.getElementById("pStatus").innerHTML =
+        `<span class="fraud-badge">BLOCKED</span>`;
+
+    }
+    else{
+
+        document.getElementById("pStatus").innerHTML =
+        `<span class="valid-badge">SUCCESS</span>`;
+    }
+
+    // BASIC DETAILS
+
+    document.getElementById("pAmount").innerText =
+    "₹" + amount;
+
+    document.getElementById("pDate").innerText =
+    date;
+
+    document.getElementById("pUser").innerText =
+    user;
+
+    document.getElementById("pMerchant").innerText =
+    merchant;
+
+    document.getElementById("pAge").innerText =
+    age;
+
+    document.getElementById("pState").innerText =
+    state;
+
+    document.getElementById("pZip").innerText =
+    zipcode;
+
+    // CATEGORY
+    document.getElementById("pCategory").innerText = category || "Unknown";
+
+    // DATE FEATURES
+
+    let dt = new Date(date);
+
+    document.getElementById("pHour").innerText =
+    dt.getHours();
+
+    document.getElementById("pDay").innerText =
+    dt.getDate();
+
+    document.getElementById("pMonth").innerText =
+    dt.getMonth() + 1;
+
+    document.getElementById("pYear").innerText =
+    dt.getFullYear();
+
+}
+
+function closePopup(){
+
+    document.getElementById("popup").style.display =
+    "none";
+
+}
+
+</script>
+
+</body>
+</html>

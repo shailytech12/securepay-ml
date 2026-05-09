@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Confirm Payment</title>
+    <link rel="icon" type="image/png" href="/static/favicon.png">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <style>
+        .confirm-box {
+            width: 400px;
+            margin: 80px auto;
+            padding: 35px;
+            border-radius: 20px;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(15px);
+            text-align: center;
+            color: white;
+        }
+        .warning-icon { font-size: 60px; margin-bottom: 10px; }
+        .amount-display {
+            font-size: 32px;
+            font-weight: bold;
+            color: #ffcc00;
+            margin: 15px 0;
+        }
+        .warning-text {
+            background: rgba(255,100,0,0.3);
+            padding: 12px;
+            border-radius: 10px;
+            margin: 15px 0;
+            font-size: 14px;
+        }
+        .confirm-box input[type="date"] {
+            width: 90%;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 10px;
+            border: none;
+            font-size: 15px;
+            text-align: center;
+        }
+        .confirm-btn {
+            width: 90%;
+            padding: 12px;
+            background: #00c853;
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 8px 0;
+        }
+        .cancel-btn {
+            width: 90%;
+            padding: 12px;
+            background: #d32f2f;
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 8px 0;
+        }
+    </style>
+</head>
+<body class="login-body">
+
+<div class="confirm-box">
+
+    <div class="warning-icon">⚠️</div>
+
+    <h2>Unusual Transaction Detected</h2>
+
+    <p>You are about to pay</p>
+    <div class="amount-display">₹{{ "{:,.0f}".format(amount) }}</div>
+    <p>to <b>{{ merchant_upi }}</b></p>
+
+    <div class="warning-text">
+        This amount is much larger than your usual payments.<br>
+        Please verify it's really you.
+    </div>
+
+    <p style="margin-top:20px;"><b>Enter your Date of Birth to confirm:</b></p>
+
+    <form method="POST" action="/confirm-payment">
+        <input type="date" name="dob" required>
+
+        <button type="submit" name="action" value="confirm" class="confirm-btn">
+            ✅ Yes, I'm making this payment
+        </button>
+
+        <button type="submit" name="action" value="cancel" class="cancel-btn">
+            ❌ No, Cancel this payment
+        </button>
+    </form>
+
+</div>
+
+</body>
+</html>

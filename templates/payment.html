@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Make Payment</title>
+    <link rel="icon" type="image/png" href="/static/favicon.png">
+    <link rel="stylesheet" href="/static/css/style.css">
+
+    <style>
+
+        #scanBtn{
+            width:100%;
+            padding:15px;
+            border:2px dashed white;
+            background:transparent;
+            color:white;
+            font-size:20px;
+            border-radius:10px;
+            cursor:pointer;
+        }
+
+        #scanBtn:hover{
+            background:rgba(255,255,255,0.1);
+        }
+
+        select {
+            width:100%;
+            padding:12px;
+            margin:8px 0;
+            border-radius:8px;
+            border:none;
+            background:rgba(255,255,255,0.15);
+            color:white;
+            font-size:15px;
+        }
+
+        select option {
+            background:#1e1e2f;
+            color:white;
+        }
+
+    </style>
+
+</head>
+
+<body class="login-body">
+
+<div class="payment-box">
+
+    <h2>Make a Payment</h2>
+
+    <p class="success-msg">Login successful!</p>
+
+    <!-- QR SECTION -->
+
+    <button type="button" id="scanBtn">
+        📷 Scan QR to Pay
+    </button>
+
+    <!-- Hidden Input -->
+    <input type="file" id="qrInput" accept="image/*" hidden>
+
+    <p style="text-align:center; margin:10px;">OR</p>
+
+    <!-- PAYMENT FORM -->
+
+    <form method="POST">
+
+        <!-- DEVICE FINGERPRINT (hidden) -->
+        <input type="hidden" name="device_fingerprint" id="deviceFingerprint">
+        <input type="hidden" name="latitude" id="latitude">
+        <input type="hidden" name="longitude" id="longitude">
+
+        <!-- UPI FIELD -->
+        <input 
+            type="text" 
+            name="upi" 
+            id="upiField"
+            placeholder="Enter Merchant UPI Number" 
+            required
+        >
+
+        <!-- AMOUNT -->
+        <input 
+            type="number" 
+            name="amount" 
+            placeholder="Amount" 
+            required
+        >
+
+        <!-- PIN -->
+        <input
+            type="password"
+            name="pin"
+            placeholder="Enter UPI PIN"
+            maxlength="6"
+            required
+        >
+
+        <!-- BANK -->
+        <select name="bank" required>
+            <option value="" disabled selected>Select Your Bank</option>
+            <option>Axis</option>
+            <option>BOB</option>
+            <option>Canara</option>
+            <option>Federal</option>
+            <option>HDFC</option>
+            <option>ICICI</option>
+            <option>Kotak</option>
+            <option>PNB</option>
+            <option>SBI</option>
+            <option>UCO</option>
+        </select>
+
+        <!-- DEVICE TYPE -->
+        <select name="device_type" required>
+            <option value="" disabled selected>Select Device Type</option>
+            <option>Android</option>
+            <option>iOS</option>
+        </select>
+
+        <!-- NETWORK TYPE -->
+        <select name="network_type" required>
+            <option value="" disabled selected>Select Network Type</option>
+            <option>3G</option>
+            <option>4G</option>
+            <option>WiFi</option>
+        </select>
+
+        <!-- PAY BUTTON -->
+        <button type="submit" class="pay-btn">
+            Pay & Detect Fraud
+        </button>
+
+    </form>
+
+    <!-- BACK -->
+    <a href="/dashboard">
+        <button class="back-btn">
+            Back to Dashboard
+        </button>
+    </a>
+
+</div>
+
+<!-- QR LIBRARY -->
+<script src="https://cdn.jsdelivr.net/npm/jsqr/dist/jsQR.js"></script>
+
+<script>
+const payForm = document.querySelector('form');
+const scanBtn = document.getElementById("scanBtn");
+const qrInput = document.getElementById("qrInput");
+const upiField = document.getElementById("upiField");
+let locationCaptured = false;
+
+// QR SCANNER
+scanBtn.addEventListener("click", () => qrInput.click());
+
+qrInput.addEventListener("change", function(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function() {
+        const img = new Image();
+        img.onload = function() {
+            const canvas = document.createElement("canvas");
+            const ctx = canvas.getContext("2d");
+            canvas.width = img.width;
+            canvas.height = img.height;
+            ctx.drawImage(img, 0, 0);
+            const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            const code = jsQR(imageData.data, canvas.width, canvas.height);
+            if (code) {
+                upiField.value = code.data;
+                alert("QR Scanned Successfully!");
+            } else {
+                alert("QR Code not detected");
+            }
+        };
+        img.src = reader.result;
+    };
+    reader.readAsDataURL(file);
+});
+
+// FORM SUBMIT — capture fingerprint + location
+payForm.addEventListener('submit', function(e) {
+    if (locationCaptured) return; // already have location, allow submit
+    e.preventDefault();
+
+    const fp = navigator.userAgent + '|' + screen.width + 'x' + screen.height + '|' + navigator.language;
+    document.getElementById('deviceFingerprint').value = btoa(fp).substring(0, 64);
+
+    function doSubmit() {
+        locationCaptured = true;
+        payForm.submit();
+    }
+
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+            function(pos) {
+                document.getElementById('latitude').value = pos.coords.latitude;
+                document.getElementById('longitude').value = pos.coords.longitude;
+                doSubmit();
+            },
+            function() { doSubmit(); },
+            { timeout: 5000 }
+        );
+    } else {
+        doSubmit();
+    }
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Merchant Transactions</title>
+    <link rel="icon" type="image/png" href="/static/favicon.png">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI';
+            background: url("https://img.freepik.com/free-vector/abstract-technology-background_23-2148884153.jpg");
+            background-size: cover;
+            color: white;
+        }
+
+        /* OVERLAY BOX */
+        .modal {
+            width: 80%;
+            margin: 100px auto;
+            padding: 20px;
+            border-radius: 20px;
+            background: linear-gradient(135deg, #6a11cb, #ff5f6d);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .close {
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255,255,255,0.3);
+        }
+
+        th {
+            color: #ddd;
+        }
+
+        /* SUCCESS */
+.success {
+    background: green;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+/* BLOCKED */
+.blocked {
+    background: red;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+        .back {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .back button {
+            padding: 10px 20px;
+            border-radius: 10px;
+            border: none;
+            background: #00c6ff;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="modal">
+
+    <div class="header">
+        <h3>Received Transactions</h3>
+        <span class="close" onclick="goBack()">✖</span>
+    </div>
+
+    <table>
+        <tr>
+            <th>Date</th>
+            <th>From User</th>
+            <th>Amount</th>
+            <th>Status</th>
+        </tr>
+
+        {% for t in data %}
+        <tr>
+            <td>{{ t.date_time }}</td>
+            <td>{{ t.user_mobile }}</td>
+            <td>₹ {{ t.amount }}</td>
+            <td>
+
+{% if t.status == "BLOCKED" %}
+
+    <span class="blocked">
+        BLOCKED
+    </span>
+
+{% else %}
+
+    <span class="success">
+        SUCCESS
+    </span>
+
+{% endif %}
+
+</td>
+        </tr>
+        {% endfor %}
+
+    </table>
+
+</div>
+
+<div class="back">
+    <a href="/merchant/dashboard">
+        <button>Back to Dashboard</button>
+    </a>
+</div>
+
+<script>
+function goBack() {
+    window.location.href = "/merchant/dashboard";
+}
+</script>
+
+</body>
+</html>

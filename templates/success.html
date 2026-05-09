@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Payment Result</title>
+
+    <link rel="icon" type="image/png" href="/static/favicon.png">
+    <link rel="stylesheet" href="/static/css/style.css">
+
+    <style>
+
+        body{
+            margin:0;
+            font-family:Segoe UI;
+            background:#1e1e2f;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            height:100vh;
+        }
+
+        .card{
+            padding:40px;
+            border-radius:20px;
+            color:white;
+            text-align:center;
+            width:350px;
+        }
+
+        .fraud{
+            background:red;
+        }
+
+        .success{
+            background:green;
+        }
+
+        button{
+            margin-top:20px;
+            padding:10px 20px;
+            border:none;
+            border-radius:10px;
+            background:#00c6ff;
+            cursor:pointer;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+{% if result == "Fraud" %}
+
+    <div class="card fraud">
+
+        <h2>🚨 Fraud Detected!</h2>
+
+        <p>Transaction Blocked for Safety</p>
+
+        <p style="font-size:13px; opacity:0.85;">Fraud Score: {{ "%.1f"|format(fraud_score * 100) }}%</p>
+
+        <a href="/dashboard">
+            <button>Back</button>
+        </a>
+
+    </div>
+
+{% else %}
+
+    <div class="card success">
+
+        <h2>✅ Payment Successful</h2>
+
+        <p>Transaction Completed Successfully</p>
+
+        <p style="font-size:13px; opacity:0.85;">Fraud Score: {{ "%.1f"|format(fraud_score * 100) }}%</p>
+
+        <a href="/dashboard">
+            <button>Back</button>
+        </a>
+
+    </div>
+
+{% endif %}
+
+</body>
+
+</html>

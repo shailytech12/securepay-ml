@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>View Users</title>
+
+    <link rel="icon" type="image/png" href="/static/favicon.png">
+    <link rel="stylesheet" href="/static/css/style.css">
+
+    <style>
+
+        .modal{
+            display:none;
+            position:fixed;
+            top:0;
+            left:0;
+            width:100%;
+            height:100%;
+            background:rgba(0,0,0,0.6);
+            justify-content:center;
+            align-items:center;
+            z-index:999;
+        }
+
+        .modal-content{
+            background:linear-gradient(135deg,#7b2ff7,#f107a3);
+            padding:30px;
+            border-radius:15px;
+            width:450px;
+            color:white;
+            position:relative;
+            box-shadow:0px 0px 20px rgba(0,0,0,0.5);
+        }
+
+        .close{
+            position:absolute;
+            right:20px;
+            top:10px;
+            font-size:30px;
+            cursor:pointer;
+        }
+
+        .user-table tr{
+            cursor:pointer;
+        }
+
+        .user-table tr:hover{
+            background:#3a2b5c;
+        }
+
+        .right-box {
+            overflow: visible;
+            max-height: none;
+        }
+
+        .user-table {
+            width: 100%;
+            min-width: 500px;
+        }
+
+        .form-container {
+            width: 95%;
+            max-width: 1100px;
+        }
+
+    </style>
+
+</head>
+
+<body class="login-body">
+
+<div class="form-container">
+
+    <!-- LEFT SIDE -->
+
+    <div class="left-box">
+
+        <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" width="150">
+
+        <h2>Registered Users</h2>
+
+    </div>
+
+
+    <!-- RIGHT SIDE -->
+
+    <div class="right-box">
+
+        <h2>User Account Details</h2>
+
+        <p style="font-size:14px;">
+            Click on any user row to view their full details.
+        </p>
+
+        <table class="user-table">
+
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Mobile</th>
+                <th>Actions</th>
+            </tr>
+
+            {% for user in users %}
+        
+
+<tr onclick="showUserDetails(
+    '{{ user.name }}',
+    '{{ user.email }}',
+    '{{ user.mobile }}',
+    '{{ user.dob }}',
+    '{{ user.address }}',
+    '{{ user.zipcode }}',
+    '{{ user.state }}'
+)">
+
+    <td>{{ user.name }}</td>
+
+    <td>{{ user.email }}</td>
+
+    <td>{{ user.mobile }}</td>
+
+<td onclick="event.stopPropagation()"
+    style="white-space:nowrap;">
+
+    <!-- EDIT BUTTON -->
+
+    <a href="/edit_user/{{ user.id }}">
+
+        <button class="edit-btn">
+            Edit
+        </button>
+
+    </a>
+
+    <!-- DELETE BUTTON -->
+
+    <a href="/delete_user/{{ user.id }}"
+       onclick="return confirm('Delete this user?')">
+
+        <button class="delete-btn">
+            Delete
+        </button>
+
+    </a>
+
+</td>
+
+</tr>
+
+
+{% endfor %}
+
+            
+        </table>
+
+    </div>
+
+</div>
+
+<div style="text-align:center; margin:20px 0 30px;">
+    <a href="/admin">
+        <button style="padding:10px 30px; background:#007bff; color:white; border:none; border-radius:10px; cursor:pointer; font-size:15px; transition:0.3s;"
+            onmouseover="this.style.background='#0056b3'" onmouseout="this.style.background='#007bff'">
+            ← Back to Dashboard
+        </button>
+    </a>
+</div>
+
+
+<!-- POPUP MODAL -->
+
+<div id="userModal" class="modal">
+
+    <div class="modal-content">
+
+        <span class="close" onclick="closeModal()">
+            &times;
+        </span>
+
+        <h2 id="modalName"></h2>
+
+        <hr>
+
+        <p>
+            <b>Email:</b>
+            <span id="modalEmail"></span>
+        </p>
+
+        <p>
+            <b>Mobile:</b>
+            <span id="modalMobile"></span>
+        </p>
+
+        <p>
+            <b>DOB:</b>
+            <span id="modalDob"></span>
+        </p>
+
+        <p>
+            <b>Address:</b>
+            <span id="modalAddress"></span>
+        </p>
+
+        <p>
+            <b>Zipcode:</b>
+            <span id="modalZip"></span>
+        </p>
+
+        <p>
+            <b>State:</b>
+            <span id="modalState"></span>
+        </p>
+
+    </div>
+
+</div>
+
+
+
+<script>
+
+function showUserDetails(
+    name,
+    email,
+    mobile,
+    dob,
+    address,
+    zip,
+    state
+){
+
+    document.getElementById("modalName").innerText = name;
+
+    document.getElementById("modalEmail").innerText = email;
+
+    document.getElementById("modalMobile").innerText = mobile;
+
+    document.getElementById("modalDob").innerText = dob;
+
+    document.getElementById("modalAddress").innerText = address;
+
+    document.getElementById("modalZip").innerText = zip;
+
+    document.getElementById("modalState").innerText = state;
+
+    document.getElementById("userModal").style.display = "flex";
+}
+
+
+function closeModal(){
+
+    document.getElementById("userModal").style.display = "none";
+}
+
+</script>
+
+</body>
+
+</html>

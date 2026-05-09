@@ -1,0 +1,33 @@
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1778319479.115426   28336 port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1778319481.792171   28336 port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+I0000 00:00:1778319483.828573   28336 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: SSE3 SSE4.1 SSE4.2 AVX AVX2 AVX512F AVX512_VNNI FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+C:\Users\lenovo\AppData\Local\Programs\Python\Python311\Lib\site-packages\sklearn\utils\validation.py:2691: UserWarning: X does not have valid feature names, but MinMaxScaler was fitted with feature names
+  warnings.warn(
+WARNING:tensorflow:TensorFlow GPU support is not available on native Windows for TensorFlow >= 2.11. Even if CUDA/cuDNN are installed, GPU will not be used. Please use WSL2 or the TensorFlow-DirectML plugin.
+C:\Users\lenovo\AppData\Local\Programs\Python\Python311\Lib\site-packages\sklearn\utils\validation.py:2691: UserWarning: X does not have valid feature names, but MinMaxScaler was fitted with feature names
+  warnings.warn(
+C:\Users\lenovo\AppData\Local\Programs\Python\Python311\Lib\site-packages\sklearn\utils\validation.py:2691: UserWarning: X does not have valid feature names, but MinMaxScaler was fitted with feature names
+  warnings.warn(
+C:\Users\lenovo\AppData\Local\Programs\Python\Python311\Lib\site-packages\sklearn\utils\validation.py:2691: UserWarning: X does not have valid feature names, but MinMaxScaler was fitted with feature names
+  warnings.warn(
+C:\Users\lenovo\AppData\Local\Programs\Python\Python311\Lib\site-packages\sklearn\utils\validation.py:2691: UserWarning: X does not have valid feature names, but MinMaxScaler was fitted with feature names
+  warnings.warn(
+C:\Users\lenovo\AppData\Local\Programs\Python\Python311\Lib\site-packages\sklearn\utils\validation.py:2691: UserWarning: X does not have valid feature names, but MinMaxScaler was fitted with feature names
+  warnings.warn(
+C:\Users\lenovo\AppData\Local\Programs\Python\Python311\Lib\site-packages\sklearn\utils\validation.py:2691: UserWarning: X does not have valid feature names, but MinMaxScaler was fitted with feature names
+  warnings.warn(
+
+Threshold: 0.3
+
+Payment sequence: 100 -> 200 -> 500 -> 800 -> 1000 -> 1500 -> 50000
+
+Rs       100 | avg=Rs   100 | ratio=   1.0x | txns_10min=0 | score=0.0034 | SUCCESS
+Rs       200 | avg=Rs   100 | ratio=   2.0x | txns_10min=1 | score=0.0064 | SUCCESS
+Rs       500 | avg=Rs   150 | ratio=   3.3x | txns_10min=2 | score=0.0075 | SUCCESS
+Rs       800 | avg=Rs   267 | ratio=   3.0x | txns_10min=3 | score=0.0081 | SUCCESS
+Rs     1,000 | avg=Rs   400 | ratio=   2.5x | txns_10min=4 | score=0.0091 | SUCCESS
+Rs     1,500 | avg=Rs   520 | ratio=   2.9x | txns_10min=5 | score=0.0096 | SUCCESS
+Rs    50,000 | avg=Rs   683 | ratio=  73.2x | txns_10min=6 | score=0.0084 | SUCCESS

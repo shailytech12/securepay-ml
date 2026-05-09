@@ -1,0 +1,10 @@
+import joblib, numpy as np, sys
+sys.stdout.reconfigure(encoding='utf-8')
+le_cat = joblib.load('model/le_category_latest.pkl')
+le_dev = joblib.load('model/le_device_latest.pkl')
+le_net = joblib.load('model/le_network_latest.pkl')
+le_bank = joblib.load('model/le_bank_latest.pkl')
+print('Categories:', list(le_cat.classes_))
+print('Devices:', list(le_dev.classes_))
+print('Networks:', list(le_net.classes_))
+print('Banks:', list(le_bank.classes_))

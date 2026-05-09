@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Transaction History</title>
+
+    <link rel="icon" type="image/png" href="/static/favicon.png">
+    <link rel="stylesheet" href="/static/css/style.css">
+
+    <style>
+
+        body{
+            font-family:'Segoe UI';
+        }
+
+        tr{
+            cursor:pointer;
+        }
+
+        /* POPUP */
+
+        .popup{
+
+            display:none;
+            position:fixed;
+            top:0;
+            left:0;
+
+            width:100%;
+            height:100%;
+
+            background:rgba(0,0,0,0.7);
+
+            justify-content:center;
+            align-items:center;
+
+            z-index:999;
+
+        }
+
+        .popup-content{
+
+            background: linear-gradient(135deg, #6a11cb, #ff5f6d);
+
+            color:white;
+
+            padding:35px;
+
+            border-radius:20px;
+
+            width:420px;
+
+            position:relative;
+
+            box-shadow:0 10px 40px rgba(0,0,0,0.5);
+
+            animation:popupAnim 0.3s ease;
+
+        }
+
+        .popup-content h2{
+
+            text-align:center;
+
+            margin-bottom:25px;
+
+        }
+
+        .popup-content p{
+
+            margin:14px 0;
+
+            font-size:18px;
+
+        }
+
+        .close{
+
+            position:absolute;
+
+            top:10px;
+            right:18px;
+
+            font-size:32px;
+
+            cursor:pointer;
+
+            color:white;
+
+        }
+
+        @keyframes popupAnim{
+
+            from{
+
+                transform:scale(0.7);
+
+                opacity:0;
+
+            }
+
+            to{
+
+                transform:scale(1);
+
+                opacity:1;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body class="login-body">
+
+<div class="txn-box">
+
+    <h2>Your Transaction History</h2>
+
+    <table>
+
+        <tr>
+            <th>Status</th>
+            <th>Date/Time</th>
+            <th>To Merchant</th>
+            <th>Amount</th>
+            <th>Category</th>
+            <th>Age</th>
+        </tr>
+
+        {% if data %}
+
+            {% for row in data %}
+
+            <tr onclick="showDetails(
+                '{{ row.status }}',
+                '{{ row.merchant_upi }}',
+                '{{ row.amount }}',
+                '{{ row.date_time }}',
+                '{{ row.category }}',
+                '{{ row.age }}'
+            )">
+
+                <td class="{{ 'fraud' if row.status == 'BLOCKED' else 'safe' }}">
+                    {{ row.status }}
+                </td>
+
+                <td>{{ row.date_time }}</td>
+
+                <td>{{ row.merchant_upi }}</td>
+
+                <td>₹ {{ row.amount }}</td>
+
+                
+
+                    <td>
+    {% set cat = row.category|string %}
+    {% if cat == "0" %}Education
+    {% elif cat == "1" %}Entertainment
+    {% elif cat == "2" %}Food
+    {% elif cat == "3" %}Groceries
+    {% elif cat == "4" %}Insurance
+    {% elif cat == "5" %}Investment
+    {% elif cat == "6" %}Medical
+    {% elif cat == "7" %}Other
+    {% elif cat == "8" %}Recharge
+    {% elif cat == "9" %}Shopping
+    {% elif cat == "10" %}Travel
+    {% elif cat == "11" %}Utilities
+    {% else %}{{ row.category }}
+    {% endif %}
+</td>
+
+                
+
+                <td>{{ row.age }}</td>
+
+            </tr>
+
+            {% endfor %}
+
+        {% else %}
+
+            <tr>
+
+                <td colspan="6">
+                    No transactions yet.
+                </td>
+
+            </tr>
+
+        {% endif %}
+
+    </table>
+
+    <a href="/dashboard">
+
+        <button class="back-btn">
+            Back to Dashboard
+        </button>
+
+    </a>
+
+</div>
+
+
+
+<!-- POPUP -->
+
+<div id="popup" class="popup">
+
+    <div class="popup-content">
+
+        <span class="close"
+              onclick="closePopup()">&times;</span>
+
+        <h2>Transaction Details</h2>
+
+        <p>
+            <b>Status:</b>
+            <span id="pStatus"></span>
+        </p>
+
+        <p>
+            <b>Merchant:</b>
+            <span id="pMerchant"></span>
+        </p>
+
+        <p>
+            <b>Amount:</b>
+            ₹ <span id="pAmount"></span>
+        </p>
+
+        <p>
+            <b>Date & Time:</b>
+            <span id="pDate"></span>
+        </p>
+
+        <p>
+            <b>Category:</b>
+            <span id="pCategory"></span>
+        </p>
+
+        <p>
+            <b>User Age:</b>
+            <span id="pAge"></span>
+        </p>
+
+    </div>
+
+</div>
+
+
+
+<script>
+
+function showDetails(
+    status,
+    merchant,
+    amount,
+    date,
+    category,
+    age
+){
+
+    document.getElementById("popup").style.display =
+    "flex";
+
+    document.getElementById("pStatus").innerText =
+    status;
+
+    document.getElementById("pMerchant").innerText =
+    merchant;
+
+    document.getElementById("pAmount").innerText =
+    amount;
+
+    document.getElementById("pDate").innerText =
+    date;
+
+    const catMap = {0:'Education',1:'Entertainment',2:'Food',3:'Groceries',4:'Insurance',5:'Investment',6:'Medical',7:'Other',8:'Recharge',9:'Shopping',10:'Travel',11:'Utilities'};
+    document.getElementById("pCategory").innerText = catMap[parseInt(category)] || category;
+
+    document.getElementById("pAge").innerText =
+    age;
+
+}
+
+function closePopup(){
+
+    document.getElementById("popup").style.display =
+    "none";
+
+}
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>View Merchants</title>
+    <link rel="icon" type="image/png" href="/static/favicon.png">
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+
+<body class="login-body">
+
+<div class="form-container">
+
+    <!-- LEFT SIDE -->
+    <div class="left-box">
+        <img src="https://cdn-icons-png.flaticon.com/512/1048/1048949.png" width="150">
+        <h2>Registered Merchants</h2>
+    </div>
+
+    <!-- RIGHT SIDE -->
+    <div class="right-box">
+        <h2>Merchant Account Details</h2>
+        <p style="font-size:14px;">Click on any merchant row to view their full details.</p>
+
+        <table class="user-table">
+            <tr>
+                <th>Merchant Name</th>
+                <th>Registered Mobile</th>
+                <th>UPI Number</th>
+            </tr>
+
+            {% if merchants %}
+                {% for m in merchants %}
+                <tr>
+                    <td>{{ m.name }}</td>
+                    <td>{{ m.mobile }}</td>
+                    <td>{{ m.upi }}</td>
+        
+                </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="3" style="text-align:center;">No registered merchants found.</td>
+                </tr>
+            {% endif %}
+
+        </table>
+
+    </div>
+
+</div>
+
+<div style="text-align:center; margin:20px 0 30px;">
+    <a href="/admin">
+        <button style="padding:10px 30px; background:#007bff; color:white; border:none; border-radius:10px; cursor:pointer; font-size:15px; transition:0.3s;"
+            onmouseover="this.style.background='#0056b3'" onmouseout="this.style.background='#007bff'">
+            ← Back to Dashboard
+        </button>
+    </a>
+</div>
+
+</body>
+</html>

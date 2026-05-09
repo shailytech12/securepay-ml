@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User Dashboard</title>
+    <link rel="icon" type="image/png" href="/static/favicon.png">
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+
+<body class="login-body">
+
+<!-- TOP BAR -->
+<div class="top-bar">
+    <h3>Welcome, {{ name }}</h3>
+    <div>
+        <a href="/merchant/setup"><button class="top-btn">Become a Merchant</button></a>
+        <a href="/"><button class="top-btn">Logout</button></a>
+    </div>
+</div>
+
+<!-- DASHBOARD -->
+<div class="dashboard-container">
+
+    <h1>User Dashboard</h1>
+
+    <div class="dashboard-cards">
+
+        <!-- PROFILE -->
+        <div class="dash-card">
+    <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png">
+    <h3>Your Profile</h3>
+    <p>View and manage your account details.</p>
+
+    <!-- ADD THIS BUTTON -->
+    <a href="/profile">
+        <button>View Profile</button>
+    </a>
+</div>
+        <!-- PAYMENT -->
+        <div class="dash-card">
+            <img src="https://cdn-icons-png.flaticon.com/512/2331/2331966.png">
+            <h3>Make a Payment</h3>
+            <p>Initiate new UPI transactions securely.</p>
+            <a href="/payment"><button>Pay Now</button></a>
+        </div>
+
+        <!-- HISTORY -->
+        <div class="dash-card">
+            <img src="https://cdn-icons-png.flaticon.com/512/1828/1828919.png">
+            <h3>Transaction History</h3>
+            <p>Review all your past transactions.</p>
+            <a href="/transactions"><button>View</button></a>
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

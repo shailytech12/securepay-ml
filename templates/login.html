@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SecurePay Login</title>
+    <link rel="icon" type="image/png" href="/static/favicon.png">
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+
+<body class="login-body">
+
+<!-- TOP TITLE -->
+<div style="text-align:center; padding-top:30px; margin-bottom:20px;">
+    <img src="/static/payment-protection1.png" width="48" style="vertical-align:middle; margin-right:10px; filter:brightness(0) invert(1);">
+    <span style="color:white; font-size:32px; font-weight:bold; vertical-align:middle; letter-spacing:1px;">SecurePay</span>
+</div>
+
+<div class="login-box">
+
+    <!-- LEFT -->
+    <div class="login-left">
+        <img id="avatar" src="https://cdn-icons-png.flaticon.com/512/6195/6195699.png" width="120">
+    </div>
+
+    <!-- RIGHT -->
+    <div class="login-right">
+
+        <!-- TOGGLE -->
+        <div class="tabs">
+            <button id="userTab" class="active" onclick="showUser()">User Login</button>
+            <button id="adminTab" onclick="showAdmin()">Admin Login</button>
+        </div>
+
+        <!-- USER FORM (OTP) -->
+        <form method="POST" id="userForm">
+            <input type="hidden" name="role" value="user">
+
+            <h2 style="color:white;">User Verification</h2>
+
+            <label style="color:white;">Mobile Number</label>
+            <input type="text" name="mobile" placeholder="Enter your mobile number" required>
+
+            <button type="submit" class="primary-btn">Send OTP</button>
+        </form>
+
+        <!-- ADMIN FORM (NORMAL LOGIN) -->
+        <form method="POST" id="adminForm" style="display:none;">
+            <input type="hidden" name="role" value="admin">
+
+            <h2 style="color:white;">Admin Portal</h2>
+
+            <label style="color:white;">Username</label>
+            <input type="text" name="username" placeholder="Enter username" required>
+
+            <label style="color:white;">Password</label>
+            <input type="password" name="password" placeholder="Enter password" required>
+
+            <button type="submit" class="dark-btn">Login as Admin</button>
+        </form>
+
+    </div>
+
+</div>
+
+<script>
+function showUser() {
+    document.getElementById("userForm").style.display = "block";
+    document.getElementById("adminForm").style.display = "none";
+    document.getElementById("userTab").classList.add("active");
+    document.getElementById("adminTab").classList.remove("active");
+    document.getElementById("avatar").src =
+        "https://cdn-icons-png.flaticon.com/512/6195/6195699.png";
+}
+
+function showAdmin() {
+    document.getElementById("userForm").style.display = "none";
+    document.getElementById("adminForm").style.display = "block";
+    document.getElementById("adminTab").classList.add("active");
+    document.getElementById("userTab").classList.remove("active");
+    document.getElementById("avatar").src =
+        "https://cdn-icons-png.flaticon.com/512/4140/4140048.png";
+}
+</script>
+
+</body>
+</html>

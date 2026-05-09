@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Profile</title>
+    <link rel="icon" type="image/png" href="/static/favicon.png">
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+
+<body class="login-body">
+
+<div class="profile-box">
+
+    <h2>Your Profile Details</h2>
+
+    <div class="profile-row">
+        <span>Full Name:</span>
+        <span>{{ user.name }}</span>
+    </div>
+
+    <div class="profile-row">
+        <span>Mobile Number:</span>
+        <span>{{ user.mobile }}</span>
+    </div>
+
+    <div class="profile-row">
+        <span>Email:</span>
+        <span>{{ user.email }}</span>
+    </div>
+
+    <div class="profile-row">
+        <span>Date of Birth:</span>
+        <span>{{ user.dob }}</span>
+        
+    </div>
+
+    <div class="profile-row">
+        <span>Location:</span>
+        <span>{{ user.address }}</span>
+       
+    </div>
+
+    <div class="profile-row">
+        <span>State:</span>
+        <span>{{ user.state }}</span>
+
+    </div>
+
+    <div class="profile-row">
+        <span>ZIP Code:</span>
+        <span>{{ user.zipcode }}</span>
+        
+    </div>
+
+    <div class="profile-row">
+        <span>Account Created:</span>
+        <span>{{ user.created_at.strftime('%d %b %Y') if user.created_at else 'N/A' }}</span>
+    </div>
+
+    <a href="/dashboard">
+        <button class="back-btn">Back to Dashboard</button>
+    </a>
+
+    <hr style="border-color:rgba(255,255,255,0.2); margin:20px 0;">
+
+    <h3 style="text-align:center;">Set / Change UPI PIN</h3>
+    <form method="POST" action="/set-pin">
+        <input type="password" name="pin" placeholder="Enter 4-6 digit PIN" maxlength="6" required
+            style="width:100%; padding:10px; border-radius:8px; border:none; margin-top:10px; box-sizing:border-box;">
+        <button type="submit" class="back-btn" style="background:#007bff; margin-top:10px;">Save PIN</button>
+    </form>
+
+</div>
+
+</body>
+</html>

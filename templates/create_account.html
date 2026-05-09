@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create Account</title>
+
+    <!-- MAIN CSS -->
+    <link rel="icon" type="image/png" href="/static/favicon.png">
+    <link rel="stylesheet" href="/static/css/style.css">
+
+    <!-- FLATPICKR CSS -->
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+    <!-- FLATPICKR JS -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+    <style>
+
+        /* DOB ROW FIX */
+        .dob-row {
+            display: flex;
+            gap: 20px;
+        }
+
+        /* MOBILE FIELD */
+        .dob-row input:first-child {
+            width: 65%;
+        }
+
+        /* DOB FIELD */
+        #dob {
+            width: 35%;
+        }
+
+        /* FLATPICKR INPUT */
+        .flatpickr-input {
+            height: 45px;
+            border-radius: 10px;
+            border: none;
+            padding-left: 12px;
+            font-size: 15px;
+        }
+
+    </style>
+
+</head>
+
+<body class="login-body">
+
+<!-- FORM CONTAINER -->
+<div class="form-container">
+
+    <!-- LEFT SIDE -->
+    <div class="left-box">
+
+        <img src="https://cdn-icons-png.flaticon.com/512/3064/3064197.png"
+             width="150">
+
+        <h3>Account Onboarding</h3>
+
+    </div>
+
+    <!-- RIGHT SIDE -->
+    <div class="right-box">
+
+        <h2>Enter New Account Details</h2>
+
+        <form method="POST">
+
+            <!-- ROW 1 -->
+            <div class="row">
+
+                <input type="text"
+                       name="name"
+                       placeholder="Full Name"
+                       required>
+
+                <input type="email"
+                       name="email"
+                       placeholder="Email Address"
+                       required>
+
+            </div>
+
+            <!-- ROW 2 -->
+            <div class="row dob-row">
+
+                <input type="text"
+                       name="mobile"
+                       placeholder="Mobile Number"
+                       required>
+
+                <input type="text"
+                       id="dob"
+                       name="dob"
+                       placeholder="Select DOB"
+                       required>
+
+            </div>
+
+            <!-- ADDRESS -->
+            <input type="text"
+                   name="address"
+                   placeholder="Full Address">
+
+            <!-- ROW 3 -->
+            <div class="row">
+
+                <input type="text"
+                       name="state"
+                       placeholder="State">
+
+                <input type="text"
+                       name="zip"
+                       placeholder="ZIP Code">
+
+            </div>
+
+            <!-- BUTTON -->
+            <button type="submit"
+                    class="primary-btn">
+
+                Create Account
+
+            </button>
+
+        </form>
+
+        <div style="text-align:center; margin-top:15px;">
+            <a href="/admin">
+                <button style="padding:10px 30px; background:#007bff; color:white; border:none; border-radius:10px; cursor:pointer; font-size:15px; transition:0.3s;"
+                    onmouseover="this.style.background='#0056b3'" onmouseout="this.style.background='#007bff'">
+                    ← Back to Dashboard
+                </button>
+            </a>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- DATE PICKER -->
+<script>
+
+flatpickr("#dob", {
+
+    dateFormat: "Y-m-d",
+
+    altInput: true,
+
+    altFormat: "d M Y",
+
+    allowInput: false,
+
+    maxDate: "today",
+
+    disableMobile: true,
+
+    static: false,
+
+    position: "auto center"
+
+});
+
+</script>
+
+</body>
+</html>
