@@ -128,7 +128,7 @@ def login():
             message['To'] = receiver_email
 
             try:
-                server = smtplib.SMTP('smtp-relay.brevo.com', 587, timeout=10)
+                server = smtplib.SMTP('smtp-relay.brevo.com', 587)
                 server.starttls()
                 server.login(sender_email, sender_password)
 
