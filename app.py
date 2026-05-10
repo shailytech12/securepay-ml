@@ -21,6 +21,7 @@ from email.mime.text import MIMEText
 from config import DB_CONFIG
 from config import EMAIL_CONFIG
 from datetime import datetime, date
+import pytz
 
 app = Flask(__name__)
 app.secret_key = os.getenv("SECRET_KEY")
@@ -276,7 +277,7 @@ def confirm_payment():
             txn['merchant_upi'],
             txn['amount'],
             'SUCCESS',
-            datetime.now(),
+            datetime.now(pytz.timezone('Asia/Kolkata')),
             txn['category'],
             txn['age'],
             txn.get('curr_lat'),
