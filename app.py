@@ -138,9 +138,9 @@ def login():
                 )
 
                 server.quit()
-
-            except Exception:
-                print("Email failed, OTP:", otp)
+            except Exception as e:
+              print("EMAIL ERROR:", e)
+              print("OTP:", otp)
 
             return redirect('/verify-otp')
 
