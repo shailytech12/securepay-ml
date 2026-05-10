@@ -127,7 +127,7 @@ def login():
             message['To'] = receiver_email
 
             try:
-                server = smtplib.SMTP('smtp.gmail.com', 587, timeout=10)
+                server = smtplib.SMTP('smtp-relay.brevo.com', 587, timeout=10)
                 server.starttls()
                 server.login(sender_email, sender_password)
 
@@ -142,7 +142,11 @@ def login():
               print("EMAIL ERROR:", e)
               print("OTP:", otp)
 
-            return redirect('/verify-otp')
+            return f"""
+<h2>OTP Sent Successfully</h2>
+<p>Your OTP is: <b>{otp}</b></p>
+<a href='/verify-otp'>Verify OTP</a>
+"""
 
         # ================= ADMIN LOGIN =================
         elif role == "admin":
