@@ -4,13 +4,14 @@ from dotenv import load_dotenv
 load_dotenv()
 
 DB_CONFIG = {
-    "host": "localhost",
-    "user": "root",
-    "password": "ship1223",
-    "database": "securepay"
+    "host": os.getenv("DB_HOST"),
+    "user": os.getenv("DB_USER"),
+    "password": os.getenv("DB_PASSWORD"),
+    "database": os.getenv("DB_NAME"),
+    "port": int(os.getenv("DB_PORT", 3306))
 }
 
 EMAIL_CONFIG = {
-    "email": "shailygajavelli5@gmail.com",
-    "password": "klvtbhqzlejianxc",
+    "email": os.getenv("EMAIL_ADDRESS"),
+    "password": os.getenv("EMAIL_PASSWORD")
 }

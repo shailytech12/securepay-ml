@@ -1,3 +1,9 @@
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+
 from flask import Flask, render_template, request, redirect, session
 import qrcode
 import os
@@ -17,7 +23,8 @@ from config import EMAIL_CONFIG
 from datetime import datetime, date
 
 app = Flask(__name__)
-app.secret_key = "secret123"
+app.secret_key = os.getenv("SECRET_KEY")
+
 
 # ==========================
 # HAVERSINE DISTANCE
