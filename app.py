@@ -60,15 +60,15 @@ STATE_COORDS = {
 # ==========================
 # LOAD ML MODEL
 # ==========================
-model = load_model('model/upi_fraud_cnn_latest.h5', compile=False)
-scaler = joblib.load('model/upi_fraud_scaler_latest.pkl')
-le_bank = joblib.load('model/le_bank_latest.pkl')
-le_category = joblib.load('model/le_category_latest.pkl')
-le_device = joblib.load('model/le_device_latest.pkl')
-le_network = joblib.load('model/le_network_latest.pkl')
-feature_names = np.load('model/feature_names_latest.npy', allow_pickle=True)
-threshold = np.load('model/best_threshold_latest.npy', allow_pickle=True)[0]
-threshold = 0.08  # Tuned threshold - catches real fraud, ignores small noise
+#model = load_model('model/upi_fraud_cnn_latest.h5', compile=False)
+#scaler = joblib.load('model/upi_fraud_scaler_latest.pkl')
+#le_bank = joblib.load('model/le_bank_latest.pkl')
+#le_category = joblib.load('model/le_category_latest.pkl')
+#le_device = joblib.load('model/le_device_latest.pkl')
+#le_network = joblib.load('model/le_network_latest.pkl')
+#feature_names = np.load('model/feature_names_latest.npy', allow_pickle=True)
+#threshold = np.load('model/best_threshold_latest.npy', allow_pickle=True)[0]
+#threshold = 0.08  # Tuned threshold - catches real fraud, ignores small noise
 
 # ==========================
 # DATABASE CONNECTION
@@ -496,8 +496,46 @@ def payment():
 
     if request.method == 'POST':
 
+        global model, scaler, le_bank, le_category
+        global le_device, le_network, feature_names, threshold
+
+        if 'model' not in globals():
+
+            model = load_model(
+                'model/upi_fraud_cnn_latest.h5',
+                compile=False
+            )
+
+            scaler = joblib.load(
+                'model/upi_fraud_scaler_latest.pkl'
+            )
+
+            le_bank = joblib.load(
+                'model/le_bank_latest.pkl'
+            )
+
+            le_category = joblib.load(
+                'model/le_category_latest.pkl'
+            )
+
+            le_device = joblib.load(
+                'model/le_device_latest.pkl'
+            )
+
+            le_network = joblib.load(
+                'model/le_network_latest.pkl'
+            )
+
+            feature_names = np.load(
+                'model/feature_names_latest.npy',
+                allow_pickle=True
+            )
+
+            threshold = 0.08
+
         merchant_upi = request.form['upi']
         amount = float(request.form['amount'])
+
 
         cursor = get_cursor()
         cursor.execute(
