@@ -115,6 +115,7 @@ def login():
             session['otp_time'] = time.time()
 
             cursor = get_cursor()
+
             cursor.execute(
                 "SELECT email FROM users WHERE mobile=%s",
                 (mobile,)
@@ -143,15 +144,22 @@ This OTP is valid for 5 minutes.
 
                 mail.send(msg)
 
+                print("OTP email sent successfully")
+
             except Exception as e:
+
                 print("EMAIL ERROR:", e)
                 print("OTP:", otp)
+
             return """
 <h2>OTP Sent Successfully</h2>
 <p>Please check your email for the OTP.</p>
 <a href='/verify-otp'>Verify OTP</a>
-"""
+"""      
 
+          
+
+              
         # ================= ADMIN LOGIN =================
         elif role == "admin":
 
