@@ -9,7 +9,7 @@ import qrcode
 import os
 import mysql.connector
 import random
-import smtplib
+
 import hashlib
 import time
 import numpy as np
@@ -17,14 +17,25 @@ import joblib
 import math
 from tensorflow.keras.models import load_model
 
-from email.mime.text import MIMEText
+
 from config import DB_CONFIG
 from config import EMAIL_CONFIG
 from datetime import datetime, date
 import pytz
 
+from flask_mail import Mail, Message
+
 app = Flask(__name__)
 app.secret_key = os.getenv("SECRET_KEY")
+
+
+app.config['MAIL_SERVER'] = 'smtp-relay.brevo.com'
+app.config['MAIL_PORT'] = 587
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USERNAME'] = EMAIL_CONFIG["email"]
+app.config['MAIL_PASSWORD'] = EMAIL_CONFIG["password"]
+
+mail = Mail(app)
 
 
 # ==========================
@@ -116,36 +127,28 @@ def login():
 
             receiver_email = user['email']
 
-            sender_email = EMAIL_CONFIG["email"]
-            sender_password = EMAIL_CONFIG["password"]
-
-            message = MIMEText(
-                f"Your OTP is {otp}. It is valid for 5 minutes."
-            )
-
-            message['Subject'] = "SecurePay OTP Verification"
-            message['From'] = sender_email
-            message['To'] = receiver_email
-
             try:
-                server = smtplib.SMTP('smtp-relay.brevo.com', 587)
-                server.starttls()
-                server.login(sender_email, sender_password)
 
-                server.sendmail(
-                    sender_email,
-                    receiver_email,
-                    message.as_string()
+                msg = Message(
+                    subject="SecurePay OTP Verification",
+                    sender=EMAIL_CONFIG["email"],
+                    recipients=[receiver_email]
                 )
 
-                server.quit()
-            except Exception as e:
-              print("EMAIL ERROR:", e)
-              print("OTP:", otp)
+                msg.body = f"""
+Your SecurePay OTP is: {otp}
 
-            return f"""
+This OTP is valid for 5 minutes.
+"""
+
+                mail.send(msg)
+
+            except Exception as e:
+                print("EMAIL ERROR:", e)
+                print("OTP:", otp)
+            return """
 <h2>OTP Sent Successfully</h2>
-<p>Your OTP is: <b>{otp}</b></p>
+<p>Please check your email for the OTP.</p>
 <a href='/verify-otp'>Verify OTP</a>
 """
 
@@ -1107,4 +1110,4 @@ def edit_user(user_id):
 # RUN SERVER
 # ==========================
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, use_reloader=False)
