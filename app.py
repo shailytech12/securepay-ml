@@ -9,6 +9,7 @@ import qrcode
 import os
 import mysql.connector
 import random
+import requests
 
 import hashlib
 import time
@@ -23,19 +24,14 @@ from config import EMAIL_CONFIG
 from datetime import datetime, date
 import pytz
 
-from flask_mail import Mail, Message
+
 
 app = Flask(__name__)
 app.secret_key = os.getenv("SECRET_KEY")
 
 
-app.config['MAIL_SERVER'] = 'smtp-relay.brevo.com'
-app.config['MAIL_PORT'] = 587
-app.config['MAIL_USE_TLS'] = True
-app.config['MAIL_USERNAME'] = EMAIL_CONFIG["email"]
-app.config['MAIL_PASSWORD'] = EMAIL_CONFIG["password"]
 
-mail = Mail(app)
+
 model = None
 scaler = None
 le_bank = None
@@ -131,26 +127,45 @@ def login():
             user = cursor.fetchone()
 
             if not user:
-                return "User not found"
+              return "User not found"
 
             receiver_email = user['email']
 
             try:
 
-                msg = Message(
-                    subject="SecurePay OTP Verification",
-                    sender=EMAIL_CONFIG["email"],
-                    recipients=[receiver_email]
+                url = "https://api.brevo.com/v3/smtp/email"
+
+                payload = {
+                    "sender": {
+                        "name": "SecurePay",
+                        "email": EMAIL_CONFIG["email"]
+                    },
+                    "to": [
+                        {
+                            "email": receiver_email
+                        }
+                    ],
+                    "subject": "SecurePay OTP Verification",
+                    "htmlContent": f"""
+                    <h2>Your OTP is: {otp}</h2>
+                    <p>Valid for 5 minutes.</p>
+                    """
+                }
+
+                headers = {
+                    "accept": "application/json",
+                    "api-key": EMAIL_CONFIG["password"],
+                    "content-type": "application/json"
+                }
+
+                response = requests.post(
+                    url,
+                    json=payload,
+                    headers=headers,
+                    timeout=10
                 )
 
-                msg.body = f"""
-Your SecurePay OTP is: {otp}
-
-This OTP is valid for 5 minutes.
-"""
-
-                mail.send(msg)
-
+                print(response.text)
                 print("OTP email sent successfully")
 
             except Exception as e:
@@ -162,8 +177,7 @@ This OTP is valid for 5 minutes.
 <h2>OTP Sent Successfully</h2>
 <p>Please check your email for the OTP.</p>
 <a href='/verify-otp'>Verify OTP</a>
-"""      
-
+"""
           
 
               
