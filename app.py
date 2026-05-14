@@ -36,7 +36,14 @@ app.config['MAIL_USERNAME'] = EMAIL_CONFIG["email"]
 app.config['MAIL_PASSWORD'] = EMAIL_CONFIG["password"]
 
 mail = Mail(app)
-
+model = None
+scaler = None
+le_bank = None
+le_category = None
+le_device = None
+le_network = None
+feature_names = None
+threshold = None
 
 # ==========================
 # HAVERSINE DISTANCE
@@ -510,12 +517,12 @@ def merchant_profile():
 @app.route('/payment', methods=['GET', 'POST'])
 def payment():
 
+    global model, scaler, le_bank, le_category
+    global le_device, le_network, feature_names, threshold
+
     if request.method == 'POST':
 
-        global model, scaler, le_bank, le_category
-        global le_device, le_network, feature_names, threshold
-
-        if 'model' not in globals():
+        if model is None:
 
             model = load_model(
                 'model/upi_fraud_cnn_latest.h5',
