@@ -61,7 +61,7 @@ SecurePay/
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/shailytech12/securepay-ml.git
+git clone https://github.com/<your-username>/securepay-ml.git
 cd securepay-ml
 ```
 
