@@ -11,7 +11,7 @@ SecurePay is a full-stack UPI payment simulation platform with a built-in CNN-ba
 - **OTP-based login** — 6-digit OTP sent to registered email, expires in 5 minutes
 - **Real-time fraud detection** — CNN model scores every transaction before it's processed
 - **Multi-signal analysis** — device fingerprint, geolocation, spending patterns, PIN retries, login failures
-- **Tiered fraud response** — auto-block for high-risk, DOB confirmation for medium-risk, pass for low-risk
+- **Tiered fraud response** — auto-block for high-risk, DOB confirmation for medium-risk, approve low-risk transactions
 - **Merchant portal** — UPI setup, QR code generation, transaction history
 - **Admin panel** — manage users, merchants, and all transactions
 - **QR code payments** — scan-to-pay flow for merchants
@@ -26,7 +26,7 @@ SecurePay is a full-stack UPI payment simulation platform with a built-in CNN-ba
 | ML Model | TensorFlow/Keras (CNN), Scikit-learn |
 | Database | MySQL |
 | Frontend | HTML, CSS, JavaScript (Jinja2 templates) |
-| Auth | OTP via Gmail SMTP, device fingerprinting |
+| Auth | Brevo Email API, OTP verification, device fingerprinting |
 | Config | python-dotenv |
 
 ---
@@ -87,11 +87,11 @@ DB_USER=root
 DB_PASSWORD=<your_mysql_password>
 DB_NAME=securepay
 
-EMAIL_ADDRESS=<your_gmail>
-EMAIL_PASSWORD=<your_gmail_app_password>
+EMAIL_ADDRESS=<verified_sender_email>
+EMAIL_PASSWORD=<brevo_api_key>
 ```
 
-> For Gmail, use an [App Password](https://myaccount.google.com/apppasswords), not your regular password.
+> Configure a verified sender email in Brevo before sending OTP emails.
 
 ### 5. Run the app
 
