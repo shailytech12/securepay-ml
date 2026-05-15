@@ -61,8 +61,8 @@ SecurePay/
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/<your-username>/SecurePay.git
-cd SecurePay
+git clone https://github.com/shailytech12/securepay-ml.git
+cd securepay-ml
 ```
 
 ### 2. Install dependencies
