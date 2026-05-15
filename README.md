@@ -1,6 +1,6 @@
 # SecurePay — AI-Powered UPI Fraud Detection System
 
-> 🌐 **Live Demo:** [Add your link here once deployed]
+> 🌐 **Live Demo:** https://securepay-ml-1.onrender.com/
 
 SecurePay is a full-stack UPI payment simulation platform with a built-in CNN-based fraud detection model. Every transaction is analyzed in real-time using behavioral, geolocation, and device signals to block fraudulent payments before they go through.
 

@@ -47,6 +47,7 @@ INSERT INTO users (name, email, mobile, dob, address, state, zipcode) VALUES
 ('Shaily Gajavelli', 'shailygajavelli5@gmail.com', '9999999999', '1998-05-15', '123 Main St', 'Telangana', '500001'),
 ('Deekshitha', 'deeki463@gmail.com', '7702777044', '2004-05-18', 'narapally', 'Telangana', '500088'),
 ('Deekshitha N', 'deeki463@gmail.com', '7702777777', '2008-05-18', 'medchal', 'Telangana', '500088'),
+('Kavya E', 'kavyaemmidi156@gmail.com', '7993763230', '2005-06-06', 'hyderabad', 'Telangana', '500065'),
 ('Test User', 'testuser@gmail.com', '8888888888', '2000-01-01', '456 Park Ave', 'Karnataka', '560001');
 
 -- Run these ALTER statements if the database already exists (to add missing columns):
